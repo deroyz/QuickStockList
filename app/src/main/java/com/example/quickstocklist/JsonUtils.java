@@ -1,5 +1,7 @@
 package com.example.quickstocklist;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -206,6 +208,7 @@ public final class JsonUtils {
         } catch (JSONException e) {
 
             e.printStackTrace();
+            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
 
         }
 

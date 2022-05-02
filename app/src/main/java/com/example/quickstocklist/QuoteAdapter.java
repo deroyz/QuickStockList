@@ -16,17 +16,15 @@ import java.util.List;
 
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.QuoteAdapterViewHolder> {
 
-    List<Quote> mQuoteData;
-    Context mContext;
+    private int mNumberItems;
 
-    public QuoteAdapter(Context context) {
-        this.mContext = context;
-
+    public QuoteAdapter(int numberOfItems) {
+        mNumberItems = numberOfItems;
     }
 
     @NonNull
     @Override
-    public QuoteAdapter.QuoteAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public QuoteAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -47,8 +45,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.QuoteAdapter
 
     @Override
     public int getItemCount() {
-        mQuoteData.size();
-        return mQuoteData.size();
+        return mNumberItems;
     }
 
     public class QuoteAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -64,7 +61,4 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.QuoteAdapter
 
     }
 
-    public void setQuoteData(ArrayList<Quote> quoteData) {
-        mQuoteData = quoteData;
-    }
 }

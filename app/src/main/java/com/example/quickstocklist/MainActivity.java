@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int NUM_LIST_ITEMS = 100;
+
     private RecyclerView mRecyclerView;
     private QuoteAdapter mQuoteAdapter;
 
@@ -24,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
         mRecyclerView.setLayoutManager(layoutManager);
+
         mRecyclerView.setHasFixedSize(true);
 
-        mQuoteAdapter = new QuoteAdapter(this);
+        mQuoteAdapter = new QuoteAdapter(NUM_LIST_ITEMS);
         mRecyclerView.setAdapter(mQuoteAdapter);
 
     }
