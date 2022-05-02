@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int NUM_LIST_ITEMS = 100;
+    private static final int NUM_LIST_ITEMS = 2;
 
     private RecyclerView mRecyclerView;
     private QuoteAdapter mQuoteAdapter;
@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
 
-        mQuoteAdapter = new QuoteAdapter(NUM_LIST_ITEMS);
+       ArrayList<Quote> quotes = JsonUtils.extractQuotes();
+
+        mQuoteAdapter = new QuoteAdapter(NUM_LIST_ITEMS, quotes);
         mRecyclerView.setAdapter(mQuoteAdapter);
 
     }

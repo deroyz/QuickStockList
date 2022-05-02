@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public final class JsonUtils {
 
+    private static final String LOG_TAG = JsonUtils.class.getSimpleName();
+
     private static final String SAMPLE_JSON_STRING = "{\n" +
             "  \"quoteResponse\": {\n" +
             "    \"error\": null,\n" +
@@ -182,8 +184,9 @@ public final class JsonUtils {
 
             // Create a JSONObject from the SAMPLE_JSON_RESPONSE string
             JSONObject jsonObject = new JSONObject(SAMPLE_JSON_STRING);
+            JSONObject quoteResponse = jsonObject.getJSONObject("quoteResponse");
 
-            JSONArray quoteArray = jsonObject.getJSONArray("result");
+            JSONArray quoteArray = quoteResponse.getJSONArray("result");
 
             //For each quote in the quoteArray
             for (int i = 0; i< quoteArray.length(); i++) {
@@ -200,6 +203,8 @@ public final class JsonUtils {
                 //
                 Quote quote = new Quote(displayName, askPrice);
 
+                Log.e(LOG_TAG, "DisplayName: " + displayName
+                        + "\n" + "Ask" + askPrice);
                 //Add the new quote to the list of quotes
                 quotes.add(quote);
 
@@ -208,7 +213,6 @@ public final class JsonUtils {
         } catch (JSONException e) {
 
             e.printStackTrace();
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
 
         }
 

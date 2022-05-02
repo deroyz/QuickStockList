@@ -2,6 +2,7 @@ package com.example.quickstocklist;
 
 import android.content.Context;
 
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,11 @@ import java.util.List;
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.QuoteAdapterViewHolder> {
 
     private int mNumberItems;
+    ArrayList<Quote> mQuoteData;
 
-    public QuoteAdapter(int numberOfItems) {
+    public QuoteAdapter(int numberOfItems, ArrayList<Quote> quotes) {
         mNumberItems = numberOfItems;
+        mQuoteData = quotes;
     }
 
     @NonNull
@@ -33,10 +36,11 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.QuoteAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QuoteAdapter.QuoteAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull QuoteAdapterViewHolder holder, int position) {
 
-        String mDisplayName = JsonUtils.extractQuotes().get(position).getDisplayName();
-        double mAskPrice = JsonUtils.extractQuotes().get(position).getAskPrice();
+
+        String mDisplayName = mQuoteData.get(position).getDisplayName();
+        double mAskPrice = mQuoteData.get(position).getAskPrice();
 
         holder.mDisplayNameTextView.setText(mDisplayName);
         holder.mAskPriceTextView.setText(String.valueOf(mAskPrice));
@@ -45,6 +49,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.QuoteAdapter
 
     @Override
     public int getItemCount() {
+        mNumberItems = mQuoteData.size();
         return mNumberItems;
     }
 
