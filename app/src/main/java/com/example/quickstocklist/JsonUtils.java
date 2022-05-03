@@ -194,13 +194,13 @@ public final class JsonUtils {
                 //Get a single quote at position i within the list of quotes
                 JSONObject currentStock = quoteArray.getJSONObject(i);
 
-                //Extract the value for the key called "displayName"
+                //  #1 Extract the value for the key called "displayName"
                 String displayName = currentStock.getString("displayName");
 
-                //Extract the value for the key called "ask"
+                //  #2 Extract the value for the key called "ask"
                 double askPrice = currentStock.getDouble("ask");
 
-                //
+                //  Generate one quote with parsed data
                 Quote quote = new Quote(displayName, askPrice);
 
                 Log.e(LOG_TAG, "DisplayName: " + displayName
