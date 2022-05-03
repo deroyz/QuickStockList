@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.quickstocklist.retrofit.RetrofitAPI;
-import com.example.quickstocklist.retrofit.RetrofitDataModel;
+import com.example.quickstocklist.retrofit.FinanceResult;
+import com.example.quickstocklist.retrofit.RetrofitClient;
+import com.example.quickstocklist.retrofit.RetrofitInterface;
+import com.example.quickstocklist.retrofit.QuoteResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -30,9 +33,12 @@ public class MainActivity extends AppCompatActivity {
     private QuoteAdapter mQuoteAdapter;
     private TextView mRetrofitTest;
 
-    protected static final String BASE_URL = "https://yfapi.net/v6/finance/";
-    protected static final String API_KEY = "yRbeIOfz5Q1cEvR1H4rBf1QnKmbWuDga2eFBPv3b";
+    private RetrofitClient mRetrofitClient;
+    private RetrofitInterface mRetrofitInterface;
 
+
+    protected static final String BASE_URL = "https://yfapi.net/";
+    protected static final String API_KEY = "yRbeIOfz5Q1cEvR1H4rBf1QnKmbWuDga2eFBPv3b";
 
 
     @Override
@@ -43,7 +49,31 @@ public class MainActivity extends AppCompatActivity {
         mRetrofitTest = (TextView) findViewById(R.id.tv_retrofit_test);
 
         initRecyclerView();
-        initNetwork();
+
+        mRetrofitClient = RetrofitClient.getRetrofitClient();
+        mRetrofitInterface = RetrofitClient.getRetrofitInterface();
+
+        mRetrofitInterface.getTrendingResult("en").enqueue(new Callback<FinanceResult>() {
+            @Override
+            public void onResponse(Call<FinanceResult> call, Response<FinanceResult> response) {
+                FinanceResult financeResult = response.body();
+
+                List<Quote> quotes = financeResult.getQuotes();
+
+                String printMessage = "";
+
+                for(int i = 0; i < quotes.size(); i++){
+                    printMessage += quotes.get(i).toString() + "";
+                }
+                mRetrofitTest.setText(printMessage);
+
+            }
+
+            @Override
+            public void onFailure(Call<FinanceResult> call, Throwable t) {
+                return;
+            }
+        });
 
     }
 
@@ -61,61 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
         mQuoteAdapter = new QuoteAdapter(NUM_LIST_ITEMS, quotes);
         mRecyclerView.setAdapter(mQuoteAdapter);
-
-    }
-
-    private void initNetwork() {
-
-        final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-        OkHttpClient client = httpClient.build();
-
-
-        //Retrofit Builder
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-
-         //Instance for interface
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-
-        //Instance for call / getting Data with API + Data model defined
-        Call<RetrofitDataModel> call = retrofitAPI.getJson(API_KEY);
-
-
-        call.enqueue(new Callback<RetrofitDataModel>() {
-            @Override
-            public void onResponse(Call<RetrofitDataModel> call, Response<RetrofitDataModel> response) {
-
-                //Checking for the response (200 is successful)
-                if(response.code() != 200){
-                    return;
-                }
-
-
-                //Get the data into textView
-                String json = "";
-
-                Log.e(LOG_TAG, "DisplayName: " + response.body().getDisplayName()
-                        + "\n" + "Ask" + response.body().getAsk()
-                        + "\n" + "Symbol" + response.body().getSymbol());
-
-                json = "displayName= " + response.body().getDisplayName() + "\n"
-                        + "ask" + response.body().getAsk() + "\n"
-                        + "symbol" + response.body().getSymbol() + "\n";
-
-                mRetrofitTest.setText(json);
-
-            }
-
-            @Override
-            public void onFailure(Call<RetrofitDataModel> call, Throwable t) {
-                Log.e(LOG_TAG, "Network Failed");
-            }
-        });
 
     }
 
