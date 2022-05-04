@@ -1,18 +1,18 @@
-package com.example.quickstocklist.retrofit;
+package com.example.quickstocklist.retrofit.trending;
 
-import com.example.quickstocklist.Quote;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class FinanceResult {
+
     @SerializedName("count")
     @Expose
     private Integer count;
     @SerializedName("quotes")
     @Expose
-    private List<Quote> quotes = null;
+    private List<FinanceResultQuote> financeResultQuote = null;
     @SerializedName("jobTimestamp")
     @Expose
     private Long jobTimestamp;
@@ -28,12 +28,12 @@ public class FinanceResult {
         this.count = count;
     }
 
-    public List<Quote> getQuotes() {
-        return quotes;
+    public List<FinanceResultQuote> getFinanceResultQuote() {
+        return financeResultQuote;
     }
 
-    public void setQuotes(List<Quote> quotes) {
-        this.quotes = quotes;
+    public void setFinanceResultQuotesQuote(List<FinanceResultQuote> quote) {
+        this.financeResultQuote = quote;
     }
 
     public Long getJobTimestamp() {

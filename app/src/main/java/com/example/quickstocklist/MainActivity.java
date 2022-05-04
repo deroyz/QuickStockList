@@ -8,26 +8,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.quickstocklist.retrofit.FinanceResult;
+import com.example.quickstocklist.retrofit.trending.FinanceResult;
+import com.example.quickstocklist.retrofit.trending.FinanceResultQuote;
 import com.example.quickstocklist.retrofit.RetrofitClient;
 import com.example.quickstocklist.retrofit.RetrofitInterface;
-import com.example.quickstocklist.retrofit.QuoteResponse;
+import com.example.quickstocklist.retrofit.trending.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = JsonUtils.class.getSimpleName();
 
-    private static final int NUM_LIST_ITEMS = 2;
+    private static final int NUM_LIST_ITEMS = 1;
 
     private RecyclerView mRecyclerView;
     private QuoteAdapter mQuoteAdapter;
@@ -53,26 +51,39 @@ public class MainActivity extends AppCompatActivity {
         mRetrofitClient = RetrofitClient.getRetrofitClient();
         mRetrofitInterface = RetrofitClient.getRetrofitInterface();
 
-        mRetrofitInterface.getTrendingResult("en").enqueue(new Callback<FinanceResult>() {
+        mRetrofitInterface.getFinance("en").enqueue(new Callback<Result>() {
+
             @Override
-            public void onResponse(Call<FinanceResult> call, Response<FinanceResult> response) {
-                FinanceResult financeResult = response.body();
+            public void onResponse(Call<Result> call, Response<Result> response) {
 
-                List<Quote> quotes = financeResult.getQuotes();
+                Result result = response.body();
 
-                String printMessage = "";
+                List<FinanceResult> financeResult = result.getFinance().getFinanceResult();
 
-                for(int i = 0; i < quotes.size(); i++){
-                    printMessage += quotes.get(i).toString() + "";
+                String printMessage = "HI";
+
+                Log.e(LOG_TAG, "DisplayName: " + printMessage);
+
+
+                for (int i = 0; i < financeResult.get(0).getFinanceResultQuote().size(); i++) {
+
+                   String symbol = financeResult.get(0).getFinanceResultQuote().get(i).getSymbol();
+
+                    printMessage += symbol + " ";
+
+                    Log.e(LOG_TAG, "DisplayName: " + printMessage);
+
                 }
                 mRetrofitTest.setText(printMessage);
 
             }
 
             @Override
-            public void onFailure(Call<FinanceResult> call, Throwable t) {
-                return;
+            public void onFailure(Call<Result> call, Throwable t) {
+
             }
+
+
         });
 
     }

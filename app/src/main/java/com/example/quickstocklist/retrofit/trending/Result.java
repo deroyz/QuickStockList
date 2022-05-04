@@ -1,9 +1,8 @@
-package com.example.quickstocklist.retrofit;
-
+package com.example.quickstocklist.retrofit.trending;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TrendingResult {
+public class Result {
 
     @SerializedName("finance")
     @Expose
@@ -13,7 +12,8 @@ public class TrendingResult {
         return finance;
     }
 
-    public void setFinance(Finance finance) {
+    public void setFinance(Finance boxOfficeResult) {
         this.finance = finance;
     }
+
 }

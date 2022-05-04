@@ -1,4 +1,4 @@
-package com.example.quickstocklist.retrofit;
+package com.example.quickstocklist.retrofit.trending;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,17 +9,18 @@ public class Finance {
 
     @SerializedName("result")
     @Expose
-    private List<FinanceResult> result = null;
+    private List <FinanceResult> financeResult = null;
+
     @SerializedName("error")
     @Expose
     private Object error;
 
-    public List<FinanceResult> getResult() {
-        return result;
+    public List<FinanceResult> getFinanceResult() {
+        return financeResult;
     }
 
-    public void setResult(List<FinanceResult> result) {
-        this.result = result;
+    public void setFinanceResults(List<FinanceResult> financeResults) {
+        this.financeResult = financeResult;
     }
 
     public Object getError() {
