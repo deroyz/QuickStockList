@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         mRetrofitClient = RetrofitClient.getRetrofitClient();
         mRetrofitInterface = RetrofitClient.getRetrofitInterface();
 
-        mRetrofitInterface.getFinance("en").enqueue(new Callback<Result>() {
+        mRetrofitInterface.getFinance("US").enqueue(new Callback<Result>() {
 
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -60,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
                 List<FinanceResult> financeResult = result.getFinance().getFinanceResult();
 
-                String printMessage = "HI";
-
-                Log.e(LOG_TAG, "DisplayName: " + printMessage);
-
+                String printMessage = "";
 
                 for (int i = 0; i < financeResult.get(0).getFinanceResultQuote().size(); i++) {
 
