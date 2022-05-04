@@ -1,6 +1,5 @@
-package com.example.quickstocklist.retrofit;
+package com.example.quickstocklist.retrofit.quote;
 
-import com.example.quickstocklist.retrofit.QuoteResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

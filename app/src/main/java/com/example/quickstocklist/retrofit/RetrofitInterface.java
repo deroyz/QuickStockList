@@ -1,5 +1,6 @@
 package com.example.quickstocklist.retrofit;
 
+import com.example.quickstocklist.retrofit.quote.QuoteResult;
 import com.example.quickstocklist.retrofit.trending.Result;
 
 import retrofit2.Call;

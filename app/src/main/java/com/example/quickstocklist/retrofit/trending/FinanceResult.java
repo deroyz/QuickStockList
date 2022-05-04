@@ -18,7 +18,9 @@ public class FinanceResult {
     private Long jobTimestamp;
     @SerializedName("startInterval")
     @Expose
+
     private Long startInterval;
+
 
     public Integer getCount() {
         return count;
@@ -28,6 +30,7 @@ public class FinanceResult {
         this.count = count;
     }
 
+
     public List<FinanceResultQuote> getFinanceResultQuote() {
         return financeResultQuote;
     }
@@ -35,6 +38,7 @@ public class FinanceResult {
     public void setFinanceResultQuotesQuote(List<FinanceResultQuote> quote) {
         this.financeResultQuote = quote;
     }
+
 
     public Long getJobTimestamp() {
         return jobTimestamp;
@@ -51,4 +55,5 @@ public class FinanceResult {
     public void setStartInterval(Long startInterval) {
         this.startInterval = startInterval;
     }
+
 }
